@@ -1,0 +1,39 @@
+MATLAB Marina Website
+
+Software Engineering Design Document
+
+Jeremy Brown
+Peter Drinovac
+Erik Leon
+Tyler Rutland
+
+Dr. Su
+CSCI 3341
+5 November 2015
+1. Architecture Design
+
+Embedded Videos Lazy Loading
+When you use lot of custom embedded components on a standard screen, sometimes the standard screen requires a long time to be loaded and in some particular cases, where this time is too long, the standard screen is not loaded correctly.This problem resides in the fact that all the custom embedded components, binded on the standard screen, are loaded together when the standard screen is initialized, and there is no way to avoid it.This causes a very long initial loading time, and sometimes this time is too long to cause a wrong loading process. The solution to this problem in which we implemented is lazy loading. All the custom embedded components binded on the standard screen header or on the first tab will be loaded together, as before, but there will be the possibility to choose the loading type for the embedded components binded as new tabs. In particular for these components you are able to choose if you want to initialize the object when the standard screen starts, or only when the user clicks on a facet.
+
+Asynchronous Page Loading
+A script loads asynchronously when the browser does not wait until the script has been downloaded from the distant server, which hosts it, to display the webpage to the visitor. In other words, the asynchronous script loads in parallel to the page while the page is loading, thus, not blocking the loading of the page for the user.We override this functionality to make certain elements load without waiting for all external resources to load. The website employs a single-page design by hijacking links using Javascript to load content using Asynchronous Javascript and XML (AJAX). This technology allows for a more responsive (in terms of user interaction) experience and lower overhead when navigating. The static content of the page, that is the menu, header, sidebar, and footer, are requested from the server when the user first arrives at the site. After that, AJAX is used to load in the main content sections when the user clicks a link in the menu or any other link that is internal to the site, without ever needing to reload the whole page. This cuts down on the amount of data that has to be retrieved from the server when the user goes to a page. The forward and back browser functionality is preserved via the HTML5 history API via a Javascript library called Sammy, so even though the user is technically only interacting with a single-page, they can navigate the same way as on a traditional website. 
+This design uses a controller to handle user interactions, which is the Javascript file that implements the functionality described above. Also, this design reduces coupling between the content of the site and how it is served. In the old MATLAB Marina website, each page had to have a PHP include function for each of the header, footer, and sidebar. Our design takes away the need to include segments of the page with PHP. Instead, these segments are in a "master" page, which has a section into which individual page content is loaded as described above. Now, each page is a pure HTML snippet that is loaded into a larger HTML page by the controller. 
+
+Menu
+Matlab Marina’s new navigation menu was developed using custom css and the SlickNav framework. SlickNav is a responsive navigation jQuery plugin that adapts to any mobile device.This framework makes use of CSS Javascript and Jquery to hide the boilerplate and infrastructural code related to handling HTTP requests and responses and alleviate the overhead associated with multi level menus. SlickNav provides 
+Multi-level menu support
+Flexible, simple markup
+Cross-browser compatibility
+Keyboard Accessible
+Degrades gracefully without JavaScript
+Creates ARIA compliant menu 
+Page Orientation Changes
+Matlab Marina should respond to the user’s behavior and environment based on screen size, platform and orientation. To achieve this we use a flexible grid layout to automatically switch to accommodate for resolution, image size and scripting abilities. For extreme size changes, we may want to change the layout altogether to focus on content and readability, either through a separate stylesheet or, more efficiently, through a CSS media query. Style sheets, as well as basic layout alterations defined to fit ranges of widths — even for landscape and portrait orientations.
+Fig     : Example use of Media Query
+
+
+2. Corresponding Interaction Diagram
+
+
+3. Design Class Diagram
+
